@@ -1,113 +1,167 @@
+"use client"
+
 import Image from "next/image";
+import Header from "./_components/Header";
+import ReactSwitch from "react-switch";
+import { useState } from "react";
+import { GiPlantWatering } from "react-icons/gi";
+import { HiOutlineSpeakerphone } from "react-icons/hi";
+import { AiOutlineVideoCamera } from "react-icons/ai";
+import { RiLightbulbLine } from "react-icons/ri";
+import BarChart from "./_components/BarChat";
+import Footer from "./_components/Footer";
 
-export default function Home() {
+
+// export BarChart;
+
+const Card = ({ name, value }) => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <div className="bg-gray-50 p-4 rounded-xl shadow-sm pt-8 border border-gray-200">
+      <p>{name}</p>
+      <h1 className="text-2xl font-bold">{value}</h1>
+    </div>
+  );
+};
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+const CardWithSwitch = ({ name, value, icon, onChange, index }) => {
+  const isOdd = index % 2 !== 0;
+  const backgroundColor = isOdd ? 'bg-[#eaf4fe]' : 'bg-gray-50';
+
+  return (
+    <div className={`${backgroundColor} p-4 rounded-xl shadow-sm border border-gray-200`}>
+      <div className="flex justify-between items-center">
+        {icon ? 
+          <div className="bg-gray-50 p-2 rounded-full shadow-sm">
+            {icon()}
+          </div>
+        : null}
+        <ReactSwitch 
+          checked={value} 
+          onChange={onChange}
+          checkedIcon={false}
+          uncheckedIcon={false}
+          height={24}
+          width={48}
+          handleDiameter={20}
+          onColor="#27394d"
         />
       </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div className="flex flex-col justify-between mt-16">
+        <p>Device</p>
+        <p className="text-lg font-bold">{name}</p>
       </div>
+    </div>
+  );
+};
+
+
+export default function Home() {
+  const constants = [
+    {
+      name: "Power Consumption",
+      value: "1,5 KWh"
+    },
+    {
+      name: "Voltage",
+      value: "12 V"
+    },
+    {
+      name: "Current",
+      value: "24 amp"
+    }
+  ];
+
+  const initialSwitchConstants = [
+    {
+      name: "Humidifier",
+      value: false,
+      icon: () => <GiPlantWatering size={24}/>
+    },
+    {
+      name: "Speaker",
+      value: false,
+      icon: () => <HiOutlineSpeakerphone size={24} />
+    },
+    {
+      name: "Smart Lamp",
+      value: false,
+      icon: () => <RiLightbulbLine size={24} />
+    },
+    {
+      name: "Camera",
+      value: false,
+      icon: () => <AiOutlineVideoCamera size={24} />
+    }
+  ];
+
+  const data = {
+    labels: [
+      'Week 1', 'Week 2', 'Week 3', 'Week 4', 
+      'Week 5', 'Week 6', 'Week 7', 'Week 8', 
+      'Week 9', 'Week 10', 'Week 11', 'Week 12'
+    ],
+    datasets: [
+      {
+        label: 'Power Consumption',
+        backgroundColor: '#d0e9fc',
+        borderColor: 'rgba(75,192,192,1)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgba(75,192,192,0.4)',
+        hoverBorderColor: 'rgba(75,192,192,1)',
+        data: [65, 59, 80, 81, 56, 55, 40, 72, 78, 88, 95, 62],
+      },
+    ],
+  };
+  
+
+  const options = {
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+      x: {
+        barThickness: 100, // Adjust the bar thickness here
+      },
+    },
+  };
+
+  const [switchConstants, setSwitchConstants] = useState(initialSwitchConstants);
+
+  const handleSwitchChange = (index) => {
+    const newSwitchConstants = [...switchConstants];
+    newSwitchConstants[index].value = !newSwitchConstants[index].value;
+    setSwitchConstants(newSwitchConstants);
+  };
+
+  return (
+    <main className="min-h-screen py-8 bg-white">
+      <Header/>
+      <section className="rounded-xl mx-8 bg-gray-50 p-4">
+        <BarChart data={data} options={options} />
+      </section>
+      <section className="flex px-8 flex-col gap-4 mt-8">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {constants.map((constant, index) => (
+            <Card key={index} name={constant.name} value={constant.value} />
+          ))}
+        </div>
+      </section>
+      <section className="flex px-8 flex-col gap-4 mt-8">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+          {switchConstants.map((constant, index) => (
+            <CardWithSwitch 
+              key={index} 
+              name={constant.name} 
+              value={constant.value} 
+              icon={constant.icon}
+              onChange={() => handleSwitchChange(index)} 
+              index={index}
+            />
+          ))}
+        </div>
+      </section>
+      <Footer />
     </main>
   );
 }
