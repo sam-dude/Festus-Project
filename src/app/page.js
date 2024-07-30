@@ -10,13 +10,14 @@ import { AiOutlineVideoCamera } from "react-icons/ai";
 import { RiLightbulbLine } from "react-icons/ri";
 import BarChart from "./_components/BarChat";
 import Footer from "./_components/Footer";
+import Weather from "./_components/Weather";
 
 
 // export BarChart;
 
 const Card = ({ name, value }) => {
   return (
-    <div className="bg-gray-50 p-4 rounded-xl shadow-sm pt-8 border border-gray-200">
+    <div className="bg-gray-50 p-4 rounded-2xl shadow-sm pt-8 border border-gray-200">
       <p>{name}</p>
       <h1 className="text-2xl font-bold">{value}</h1>
     </div>
@@ -25,10 +26,10 @@ const Card = ({ name, value }) => {
 
 const CardWithSwitch = ({ name, value, icon, onChange, index }) => {
   const isOdd = index % 2 !== 0;
-  const backgroundColor = isOdd ? 'bg-[#eaf4fe]' : 'bg-gray-50';
+  const backgroundColor = isOdd ? 'bg-[#d0e9fc]' : 'bg-gray-50';
 
   return (
-    <div className={`${backgroundColor} p-4 rounded-xl shadow-sm border border-gray-200`}>
+    <div className={`${backgroundColor} p-4 rounded-2xl shadow-sm border border-gray-200`}>
       <div className="flex justify-between items-center">
         {icon ? 
           <div className="bg-gray-50 p-2 rounded-full shadow-sm">
@@ -135,8 +136,11 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen py-8 bg-white">
+    <main className="min-h-screen py-8 bg-white pb-24">
       <Header/>
+      <section className="px-8">
+        <Weather />
+      </section>
       <section className="flex px-8 flex-col gap-4 mt-8">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {constants.map((constant, index) => (
@@ -158,7 +162,7 @@ export default function Home() {
           ))}
         </div>
       </section>
-      <section className="rounded-xl mx-8 bg-gray-50 p-4 mt-8">
+      <section className="rounded-2xl mx-8 bg-gray-50 p-4 mt-8 border border-gray-200 shadow-sm">
         <BarChart data={data} options={options} />
       </section>
       <Footer />
