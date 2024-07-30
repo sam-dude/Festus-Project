@@ -25,13 +25,20 @@ async function GetWeather() {
 function Weather() {
     const [weather, setWeather] = useState({})
     useEffect(() => {
-        GetWeather().then(data => {
-            setWeather(data.current)
-        })
-    }, [])
+        const fetchWeather = async () => {
+            const data = await GetWeather();
+            setWeather(data.current);
+        };
+
+        fetchWeather(); // Initial fetch
+
+        const intervalId = setInterval(fetchWeather, 60000); // Fetch every 60 seconds
+
+        return () => clearInterval(intervalId); // Cleanup interval on component unmount
+    }, []);
   return (
     <div className="bg-gray-50 p-4 rounded-2xl shadow-sm pt-8 border border-gray-200 grid grid-flow-row grid-cols-4">
-        <div className="flex flex-row gap-4">
+        <div className="flex flex-row gap-4 items-center">
             <img src={weather?.condition?.icon} width={50} height={50} />
             {/* <p>{weather?.condition?.text}</p> */}
             <div>
@@ -41,7 +48,7 @@ function Weather() {
         </div>      
         <div>
             <p>Weather</p>
-            <h1 className="text-2xl font-bold">{weather?.temp_c ? weather?.temp_c : 0}°<p className='inline text-sm font-normal'>c</p></h1>
+            <h1 className="text-2xl font-bold">{weather?.condition?.text ? weather?.condition?.text : "-"}</h1>
         </div>        
         <div>
             <p>Humidty</p>

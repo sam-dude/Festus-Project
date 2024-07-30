@@ -4,8 +4,7 @@ import Image from "next/image";
 import Header from "./_components/Header";
 import ReactSwitch from "react-switch";
 import { useState } from "react";
-import { GiPlantWatering } from "react-icons/gi";
-import { HiOutlineSpeakerphone } from "react-icons/hi";
+import { SiSocketdotio } from "react-icons/si";
 import { AiOutlineVideoCamera } from "react-icons/ai";
 import { RiLightbulbLine } from "react-icons/ri";
 import BarChart from "./_components/BarChat";
@@ -74,24 +73,24 @@ export default function Home() {
 
   const initialSwitchConstants = [
     {
-      name: "Humidifier",
-      value: false,
-      icon: () => <GiPlantWatering size={24}/>
-    },
-    {
-      name: "Speaker",
-      value: false,
-      icon: () => <HiOutlineSpeakerphone size={24} />
-    },
-    {
-      name: "Smart Lamp",
+      name: "Bulb 1",
       value: false,
       icon: () => <RiLightbulbLine size={24} />
     },
     {
-      name: "Camera",
+      name: "Bulb 2",
       value: false,
-      icon: () => <AiOutlineVideoCamera size={24} />
+      icon: () => <RiLightbulbLine size={24} />
+    },
+    {
+      name: "Socket 1",
+      value: false,
+      icon: () => <SiSocketdotio size={24} />
+    },
+    {
+      name: "Socket 2",
+      value: false,
+      icon: () => <SiSocketdotio size={24} />
     }
   ];
 
