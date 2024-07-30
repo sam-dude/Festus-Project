@@ -137,9 +137,6 @@ export default function Home() {
   return (
     <main className="min-h-screen py-8 bg-white">
       <Header/>
-      <section className="rounded-xl mx-8 bg-gray-50 p-4">
-        <BarChart data={data} options={options} />
-      </section>
       <section className="flex px-8 flex-col gap-4 mt-8">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {constants.map((constant, index) => (
@@ -160,6 +157,9 @@ export default function Home() {
             />
           ))}
         </div>
+      </section>
+      <section className="rounded-xl mx-8 bg-gray-50 p-4 mt-8">
+        <BarChart data={data} options={options} />
       </section>
       <Footer />
     </main>
