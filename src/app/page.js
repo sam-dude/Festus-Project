@@ -59,7 +59,7 @@ const CardWithSwitch = ({ name, value, icon, onChange, index }) => {
 
 
 export default function Home() {
-  const { get } = useApiCall();
+  const { get, switchRelay } = useApiCall();
   const [constants, setConstants] = useState([
     { name: "Voltage", value: "25.67" },
     { name: "Current", value: "1.56" },
@@ -150,6 +150,7 @@ export default function Home() {
   const handleSwitchChange = (index) => {
     const newSwitchConstants = [...switchConstants];
     newSwitchConstants[index].value = !newSwitchConstants[index].value;
+    switchRelay(`relay${index + 1}`, newSwitchConstants[index].value ? 'on' : 'off');
     setSwitchConstants(newSwitchConstants);
   };
 
