@@ -27,7 +27,7 @@ function Weather() {
     useEffect(() => {
         const fetchWeather = async () => {
             const data = await GetWeather();
-            setWeather(data.current);
+            setWeather(data?.current);
         };
 
         fetchWeather(); // Initial fetch

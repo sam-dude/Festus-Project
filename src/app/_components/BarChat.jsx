@@ -4,6 +4,8 @@
 import React from 'react';
 import { Bar, } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { Line } from 'react-chartjs-2';
+import { LineElement, PointElement} from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -33,3 +35,11 @@ const BarChart = ({ data, options }) => {
 };
 
 export default BarChart;
+
+ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
+
+export const CurveChart = ({ data, options }) => {
+  return <Line data={data} options={options} />;
+};
+;
+

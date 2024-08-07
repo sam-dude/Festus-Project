@@ -3,13 +3,14 @@
 import Image from "next/image";
 import Header from "./_components/Header";
 import ReactSwitch from "react-switch";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SiSocketdotio } from "react-icons/si";
 import { AiOutlineVideoCamera } from "react-icons/ai";
 import { RiLightbulbLine } from "react-icons/ri";
-import BarChart from "./_components/BarChat";
+import BarChart, { CurveChart } from "./_components/BarChat";
 import Footer from "./_components/Footer";
 import Weather from "./_components/Weather";
+import useApiCall from "./_utils/api";
 
 
 // export BarChart;
@@ -18,7 +19,9 @@ const Card = ({ name, value }) => {
   return (
     <div className="bg-gray-50 p-4 rounded-2xl shadow-sm pt-8 border border-gray-200">
       <p>{name}</p>
-      <h1 className="text-2xl font-bold">{value}</h1>
+      <h1 className="text-2xl font-bold">{value} 
+        <p className='inline text-sm'>{name === "Voltage" ? " amp" : name === "Current" ? " V" : name === "Power Consumption" ? " Kwh" : ''}</p>
+      </h1>
     </div>
   );
 };
@@ -56,20 +59,36 @@ const CardWithSwitch = ({ name, value, icon, onChange, index }) => {
 
 
 export default function Home() {
-  const constants = [
-    {
-      name: "Power Consumption",
-      value: "1,5 KWh"
-    },
-    {
-      name: "Voltage",
-      value: "12 V"
-    },
-    {
-      name: "Current",
-      value: "24 amp"
-    }
-  ];
+  const { get } = useApiCall();
+  const [constants, setConstants] = useState([
+    { name: "Voltage", value: "25.67" },
+    { name: "Current", value: "1.56" },
+    { name: "Battery Percentage", value: "60%" },
+    { name: "Load Percentage", value: "50%" },
+    { name: "Power Consumption", value: "125" }
+  ]);
+  useEffect(() => {
+    const fetchConstants = async () => {
+      const {data} = await get("sensor");
+      if(data){
+        let newConstants = data.forEach((constant, index) => {
+          constants[index].value = constant.value;
+        });
+        setConstants([...newConstants]);
+      }
+      else{
+        console.log("Error fetching constants");
+      }
+      
+    };
+
+    fetchConstants(); // Initial fetch
+
+    const intervalId = setInterval(fetchConstants, 60000); // Fetch every 60 seconds
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  }, []);
+
 
   const initialSwitchConstants = [
     {
@@ -141,7 +160,7 @@ export default function Home() {
         <Weather />
       </section>
       <section className="flex px-8 flex-col gap-4 mt-8">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-5">
           {constants.map((constant, index) => (
             <Card key={index} name={constant.name} value={constant.value} />
           ))}
@@ -162,7 +181,7 @@ export default function Home() {
         </div>
       </section>
       <section className="rounded-2xl mx-8 bg-gray-50 p-4 mt-8 border border-gray-200 shadow-sm">
-        <BarChart data={data} options={options} />
+        <CurveChart data={data} options={options} />
       </section>
       <Footer />
     </main>
