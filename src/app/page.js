@@ -67,14 +67,35 @@ export default function Home() {
     { name: "Load Percentage", value: "50%" },
     { name: "Power Consumption", value: "125" }
   ]);
+  
   useEffect(() => {
     const fetchConstants = async () => {
       const { data } = await get("sensor");
       if (data) {
-        const newConstants = constants.map((constant, index) => {
+        const newConstants = constants.map((constant) => {
+          let newValue;
+          switch (constant.name) {
+            case "Voltage":
+              newValue = data.Voltage;
+              break;
+            case "Current":
+              newValue = data.Current;
+              break;
+            case "Battery Percentage":
+              newValue = data.batteryPercentage;
+              break;
+            case "Load Percentage":
+              newValue = data.loadPercentage;
+              break;
+            case "Power Consumption":
+              newValue = data.powerConsumption;
+              break;
+            default:
+              newValue = constant.value;
+          }
           return {
             ...constant,
-            value: data[constant.key] // Assuming each constant has a 'key' property that matches the keys in the data object
+            value: newValue
           };
         });
         setConstants(newConstants);
@@ -82,7 +103,7 @@ export default function Home() {
         console.log("Error fetching constants");
       }
     };
-
+  
     fetchConstants();
 
     const intervalId = setInterval(fetchConstants, 60000); // Fetch every 60 seconds
