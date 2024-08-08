@@ -61,11 +61,11 @@ const CardWithSwitch = ({ name, value, icon, onChange, index }) => {
 export default function Home() {
   const { get, switchRelay } = useApiCall();
   const [constants, setConstants] = useState([
-    { name: "Voltage", value: "25.67" },
-    { name: "Current", value: "1.56" },
-    { name: "Battery Percentage", value: "60%" },
-    { name: "Load Percentage", value: "50%" },
-    { name: "Power Consumption", value: "125" }
+    { name: "Voltage", value: "-" },
+    { name: "Current", value: "-" },
+    { name: "Battery Percentage", value: "-" },
+    { name: "Load Percentage", value: "-" },
+    { name: "Power Consumption", value: "-" }
   ]);
   
   useEffect(() => {
