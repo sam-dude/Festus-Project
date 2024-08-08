@@ -9,7 +9,7 @@ const Footer = () => {
         style={{ width: 'calc(100% - 64px)' }}
       >
         <div className="container mx-auto text-center">
-          <p>&copy; 2024 Festus Charles. All rights reserved.</p>
+          <p>&copy; Smart home dashboard</p>
         </div>
       </footer>
     </section>

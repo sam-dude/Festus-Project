@@ -1,6 +1,7 @@
 import axios from "axios"
 
-const ESP32_IP_ADDRESS = process.env.ESP32_IP_ADDRESS
+const ESP32_IP_ADDRESS = process.env.NEXT_PUBLIC_ESP32_IP_ADDRESS
+
 
 const useApiCall = () => {
     const get = async (url) => {

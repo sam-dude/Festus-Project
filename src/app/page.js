@@ -20,7 +20,7 @@ const Card = ({ name, value }) => {
     <div className="bg-gray-50 p-4 rounded-2xl shadow-sm pt-8 border border-gray-200">
       <p>{name}</p>
       <h1 className="text-2xl font-bold">{value} 
-        <p className='inline text-sm'>{name === "Voltage" ? " amp" : name === "Current" ? " V" : name === "Power Consumption" ? " Kwh" : ''}</p>
+        <p className='inline text-sm'>{name === "Voltage" ? " V" : name === "Current" ? " amp" : name === "Power Consumption" ? " Kwh" : ''}</p>
       </h1>
     </div>
   );
@@ -161,7 +161,7 @@ export default function Home() {
         <Weather />
       </section>
       <section className="flex px-8 flex-col gap-4 mt-8">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
           {constants.map((constant, index) => (
             <Card key={index} name={constant.name} value={constant.value} />
           ))}
