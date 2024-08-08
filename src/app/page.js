@@ -106,7 +106,7 @@ export default function Home() {
   
     fetchConstants();
 
-    const intervalId = setInterval(fetchConstants, 60000); // Fetch every 60 seconds
+    const intervalId = setInterval(fetchConstants, 15000); // Fetch every 60 seconds
 
     return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, []);
