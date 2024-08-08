@@ -101,6 +101,13 @@ export default function Home() {
         setConstants(newConstants);
       } else {
         console.log("Error fetching constants");
+        setConstants([
+          { name: "Voltage", value: "-" },
+          { name: "Current", value: "-" },
+          { name: "Battery Percentage", value: "-" },
+          { name: "Load Percentage", value: "-" },
+          { name: "Power Consumption", value: "-" }
+        ])
       }
     };
   
