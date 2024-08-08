@@ -69,20 +69,21 @@ export default function Home() {
   ]);
   useEffect(() => {
     const fetchConstants = async () => {
-      const {data} = await get("sensor");
-      if(data){
-        let newConstants = data.forEach((constant, index) => {
-          constants[index].value = constant.value;
+      const { data } = await get("sensor");
+      if (data) {
+        const newConstants = constants.map((constant, index) => {
+          return {
+            ...constant,
+            value: data[constant.key] // Assuming each constant has a 'key' property that matches the keys in the data object
+          };
         });
-        setConstants([...newConstants]);
-      }
-      else{
+        setConstants(newConstants);
+      } else {
         console.log("Error fetching constants");
       }
-      
     };
 
-    fetchConstants(); // Initial fetch
+    fetchConstants();
 
     const intervalId = setInterval(fetchConstants, 60000); // Fetch every 60 seconds
 
