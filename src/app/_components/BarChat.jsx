@@ -1,13 +1,29 @@
-// src/components/BarChart.js
 "use client";
 
 import React from 'react';
-import { Bar, } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
-import { Line } from 'react-chartjs-2';
-import { LineElement, PointElement} from 'chart.js';
+import { Bar, Line } from 'react-chartjs-2';
+import { 
+  Chart as ChartJS, 
+  CategoryScale, 
+  LinearScale, 
+  BarElement, 
+  LineElement, 
+  PointElement, 
+  Title, 
+  Tooltip, 
+  Legend 
+} from 'chart.js';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale, 
+  LinearScale, 
+  BarElement, 
+  LineElement, 
+  PointElement, 
+  Title, 
+  Tooltip, 
+  Legend
+);
 
 // Custom plugin to adjust bar height
 const customBarHeightPlugin = {
@@ -34,12 +50,34 @@ const BarChart = ({ data, options }) => {
   return <Bar data={data} options={options} plugins={[customBarHeightPlugin]} />;
 };
 
-export default BarChart;
-
-ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
-
 export const CurveChart = ({ data, options }) => {
-  return <Line data={data} options={options} />;
-};
-;
+  const defaultOptions = {
+    responsive: true,
+    elements: {
+      line: {
+        tension: 0.4, // This makes the line curved
+      },
+      point: {
+        radius: 0, // This hides the points
+      },
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        grid: {
+          display: false,
+        },
+      },
+    },
+  };
 
+  const mergedOptions = { ...defaultOptions, ...options };
+
+  return <Line data={data} options={mergedOptions} />;
+};
+
+export default BarChart;

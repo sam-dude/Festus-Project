@@ -13,7 +13,19 @@ import Weather from "./_components/Weather";
 import useApiCall from "./_utils/api";
 
 
-// export BarChart;
+const generateDailyData = (numDays) => {
+  const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  const labels = [];
+  const data = [];
+
+  for (let i = 0; i < numDays; i++) {
+    labels.push(daysOfWeek[i % 7]);
+    // Generate realistic power consumption values between 50 and 100
+    data.push(Math.floor(Math.random() * 51) + 50);
+  }
+
+  return { labels, data };
+};
 
 const Card = ({ name, value }) => {
   return (
@@ -141,13 +153,9 @@ export default function Home() {
       icon: () => <SiSocketdotio size={24} />
     }
   ];
-
-  const data = {
-    labels: [
-      'Week 1', 'Week 2', 'Week 3', 'Week 4', 
-      'Week 5', 'Week 6', 'Week 7', 'Week 8', 
-      'Week 9', 'Week 10', 'Week 11', 'Week 12'
-    ],
+  const { labels, data } = generateDailyData(7); // Generate data for 14 days
+  const dataForChart = {
+    labels: labels,
     datasets: [
       {
         label: 'Power Consumption',
@@ -156,10 +164,10 @@ export default function Home() {
         borderWidth: 1,
         hoverBackgroundColor: 'rgba(75,192,192,0.4)',
         hoverBorderColor: 'rgba(75,192,192,1)',
-        data: [65, 59, 80, 81, 56, 55, 40, 72, 78, 88, 95, 62],
+        data: data,
       },
     ],
-  };
+  };   
   
 
   const options = {
@@ -211,7 +219,7 @@ export default function Home() {
         </div>
       </section>
       <section className="rounded-2xl mx-8 bg-gray-50 p-4 mt-8 border border-gray-200 shadow-sm">
-        <CurveChart data={data} options={options} />
+        <CurveChart data={dataForChart} options={options} />
       </section>
       <Footer />
     </main>
