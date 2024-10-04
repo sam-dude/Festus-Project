@@ -31,7 +31,7 @@ const Card = ({ name, value }) => {
   return (
     <div className="bg-gray-50 p-4 rounded-2xl shadow-sm pt-8 border border-gray-200">
       <p>{name}</p>
-      <h1 className="text-2xl font-bold">{value} 
+      <h1 className="text-2xl font-bold">{value}
         <p className='inline text-sm'>{name === "Voltage" ? " V" : name === "Current" ? " amp" : name === "Power Consumption" ? " Kwh" : ''}</p>
       </h1>
     </div>
@@ -45,13 +45,13 @@ const CardWithSwitch = ({ name, value, icon, onChange, index }) => {
   return (
     <div className={`${backgroundColor} p-4 rounded-2xl shadow-sm border border-gray-200`}>
       <div className="flex justify-between items-center">
-        {icon ? 
+        {icon ?
           <div className="bg-gray-50 p-2 rounded-full shadow-sm">
             {icon()}
           </div>
-        : null}
-        <ReactSwitch 
-          checked={value} 
+          : null}
+        <ReactSwitch
+          checked={value}
           onChange={onChange}
           checkedIcon={false}
           uncheckedIcon={false}
@@ -79,7 +79,7 @@ export default function Home() {
     { name: "Load Percentage", value: "-" },
     { name: "Power Consumption", value: "-" }
   ]);
-  
+
   useEffect(() => {
     const fetchConstants = async () => {
       const { data } = await get("sensor");
@@ -122,10 +122,10 @@ export default function Home() {
         ])
       }
     };
-  
+
     fetchConstants();
 
-    const intervalId = setInterval(fetchConstants, 15000); // Fetch every 60 seconds
+    const intervalId = setInterval(fetchConstants, 3000); // Fetch every 60 seconds
 
     return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, []);
@@ -153,6 +153,7 @@ export default function Home() {
       icon: () => <SiSocketdotio size={24} />
     }
   ];
+
   const { labels, data } = generateDailyData(7); // Generate data for 14 days
   const dataForChart = {
     labels: labels,
@@ -174,10 +175,10 @@ export default function Home() {
     maintainAspectRatio: false,
     scales: {
       y: {
-        beginAtZero: true,
+        beginAtZero: false,
       },
       x: {
-        barThickness: 100, // Adjust the bar thickness here
+        barThickness: 1000, // Adjust the bar thickness here
       },
     },
   };
@@ -193,7 +194,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen py-8 bg-white pb-24">
-      <Header/>
+      <Header />
       <section className="px-8">
         <Weather />
       </section>
@@ -207,12 +208,12 @@ export default function Home() {
       <section className="flex px-8 flex-col gap-4 mt-8">
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
           {switchConstants.map((constant, index) => (
-            <CardWithSwitch 
-              key={index} 
-              name={constant.name} 
-              value={constant.value} 
+            <CardWithSwitch
+              key={index}
+              name={constant.name}
+              value={constant.value}
               icon={constant.icon}
-              onChange={() => handleSwitchChange(index)} 
+              onChange={() => handleSwitchChange(index)}
               index={index}
             />
           ))}
